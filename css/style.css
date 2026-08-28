@@ -1,15 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
-html {
-    width: 100%;
-    overflow-x: hidden;
-}
 
-body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    margin: 0;
-}
 :root {
   --bg: #f7f4ef;
   --surface: #fffdf9;
@@ -45,11 +35,16 @@ body.dark-mode {
 }
 
 html {
+  width: 100%;
+  overflow-x: hidden;
   scroll-behavior: smooth;
   scroll-padding-top: 85px;
 }
 
 body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   margin: 0;
   background: var(--bg);
   color: var(--text);
