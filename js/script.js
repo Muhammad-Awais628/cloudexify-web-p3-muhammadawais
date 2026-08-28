@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     d.setDate(d.getDate() + 1);
     date.min = d.toISOString().split('T')[0];
   }
-  
+
   $$('[data-service]').forEach(b => {
     b.addEventListener('click', () => {
       setTimeout(() => {
@@ -139,17 +139,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e) e.textContent = msg;
   }
 
+  let appointmentBooked = false;
+
   form?.addEventListener('submit', e => {
     e.preventDefault();
+
     ['nameError', 'phoneError', 'emailError', 'packageError']
       .forEach(x => error(x, ''));
+
     $('#formError').classList.add('d-none');
     $('#formSuccess').classList.add('d-none');
+
     let ok = true;
-    const name = $('#patientName').value.trim(),
-      phone = $('#phone').value.trim(),
-      email = $('#email').value.trim(),
-      selectedPackage = packageType ? packageType.value : '';
+
+    const name = $('#patientName').value.trim();
+    const phone = $('#phone').value.trim();
+    const email = $('#email').value.trim();
+    const selectedPackage = packageType ? packageType.value : '';
+    const selectedService = service ? service.value : '';
+    const selectedDate = date ? date.value : '';
+    const selectedTime = $('#apptTime') ? $('#apptTime').value : '';
+
     if (!selectedPackage) {
       error('packageError', 'Please choose a care package.');
       ok = false;
@@ -166,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
       error('emailError', 'Enter a valid email address.');
       ok = false;
     }
-    if (!service.value || !date.value || !$('#apptTime').value) {
+    if (!selectedService || !selectedDate || !selectedTime) {
       ok = false;
     }
     if (!ok) {
@@ -174,16 +184,32 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     $('#formSuccess').classList.remove('d-none');
-    form.querySelectorAll('input,select,textarea,button[type="submit"]').forEach(x => x.disabled = true);
+    appointmentBooked = true;
+    form.querySelectorAll(
+      'input, select, textarea, button[type="submit"]'
+    ).forEach(x => {
+      x.disabled = true;
+    });
     setTimeout(() => {
       form.reset();
-      form.querySelectorAll('input,select,textarea,button[type="submit"]').forEach(x => x.disabled = false);
-      if (window.bootstrap)
-        bootstrap.Modal.getOrCreateInstance(modal).hide();
+      form.querySelectorAll(
+        'input, select, textarea, button[type="submit"]'
+      ).forEach(x => {
+        x.disabled = false;
+      });
       $('#formSuccess').classList.add('d-none');
+      if (window.bootstrap && modal) {
+        bootstrap.Modal.getOrCreateInstance(modal).hide();
+      }
     }, 2600);
   });
+  modal?.addEventListener('hidden.bs.modal', () => {
+    if (appointmentBooked) {
+      showAppointmentToast();
+      appointmentBooked = false;
+    }
 
+  });
   const reveal = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.style.opacity = '1';
@@ -202,3 +228,17 @@ document.addEventListener('DOMContentLoaded', () => {
     reveal.observe(el);
   });
 });
+
+function showAppointmentToast() {
+  const toast = document.getElementById('appointmentToast');
+  if (!toast) {
+    console.error('Appointment toast element not found.');
+    return;
+  }
+  toast.classList.remove('show');
+  void toast.offsetWidth;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 4500);
+}

@@ -1416,3 +1416,104 @@ button {
     bottom: 12px;
   }
 }
+
+/* =========================
+   APPOINTMENT TOAST
+========================= */
+
+#appointmentToast {
+  position: fixed !important;
+  top: 100px !important;
+  right: 25px !important;
+
+  width: 360px;
+  max-width: calc(100% - 30px);
+
+  display: flex !important;
+  align-items: center;
+  gap: 14px;
+
+  padding: 17px 20px;
+
+  background: #ffffff;
+  color: #222222;
+
+  border-radius: 14px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.20);
+
+  border-left: 4px solid #b8955a;
+
+  z-index: 999999 !important;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateX(120%);
+
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    visibility 0.4s ease;
+}
+
+
+/* SHOW TOAST */
+
+#appointmentToast.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(0) !important;
+}
+
+#appointmentToast>i {
+  font-size: 28px;
+  color: #b8955a;
+  flex-shrink: 0;
+}
+
+#appointmentToast strong {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+#appointmentToast span {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #777777;
+}
+
+
+.dark-mode #appointmentToast {
+  background: #22211f;
+  color: #ffffff;
+  border-left-color: #c8a96b;
+}
+
+.dark-mode #appointmentToast>i {
+  color: #c8a96b;
+}
+
+.dark-mode #appointmentToast span {
+  color: #bdbdbd;
+}
+
+@media (max-width: 576px) {
+
+  #appointmentToast {
+    top: 80px !important;
+    left: 15px !important;
+    right: 15px !important;
+    width: auto;
+    max-width: none;
+    transform: translateY(-120%);
+  }
+
+  #appointmentToast.show {
+    transform: translateY(0) !important;
+  }
+}
