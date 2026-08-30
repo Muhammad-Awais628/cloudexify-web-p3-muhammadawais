@@ -7,7 +7,8 @@
 **Technology Stack:** HTML5, CSS3, JavaScript (Vanilla JS)  
 **Project Type:** Dental Clinic / Healthcare Website  
 **Development Environment:** Visual Studio Code, Google Chrome, Git & GitHub  
-**Submitted To:** CloudExify Summer Internship 2026
+**Submitted To:** CloudExify Summer Internship 2026  
+🌐 Live Demo: http://cloudexify-web-p3-muhammadawais.vercel.app/
 
 ---
 
